@@ -1,4 +1,6 @@
 #When working with asam2, a couple of things were needed in order for the software to run properly. 
 #First: I needed to download each protein from RCSB as a .pdb file and remove any solvent or not polymer items from the .pdb file in pymol
 #Second: Create a new directory in my Home Directory with all of the protein files
-#Third: I then was able to follow the directions provided by asam2, specifying correct files and output directories
+#Third: Similar to my work with BioEmu, I was working within the gateway node and will need to enter a true node to be able to run the sequences properly
+#Fourth: I needed to get access to a GPU to run the sequences effectively. Unfourtunately, the GPU's were down at the time, therefore delaying results
+#Fifth: I then was able to follow the directions provided by asam2, specifying correct files and output directories
