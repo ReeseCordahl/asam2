@@ -1,7 +1,30 @@
 #When working with asam2, a couple of things were needed in order for the software to run properly. 
-#First: I needed to download each protein from RCSB as a .pdb file and remove any solvent or not polymer items from the .pdb file in pymol
-#Second: Create a new directory in my Home Directory with all of the protein files
-#Third: Similar to my work with BioEmu, I was working within the gateway node and will need to enter a true node to be able to run the sequences properly
-#Fourth: I needed to get access to a GPU to run the sequences effectively. Unfourtunately, the GPU's were down at the time, therefore delaying results
-#Fifth: I then was able to follow the directions provided by asam2, specifying correct files and output directories
-Here is my terminal when running asam2:
+#1st: I needed to download each protein from RCSB as a .pdb file and remove any solvent or not polymer items from the .pdb file in pymol
+#2nd: Create a new directory in my Home Directory with all of the protein files
+#3rd: Similar to my work with BioEmu, I was working within the gateway node and will need to enter a true node to be able to run the sequences properly
+#4th: I needed to get access to a GPU to run the sequences effectively. Unfourtunately, the GPU's were down at the time, therefore delaying results
+#5th: As well as acessing a GPU, I needed to enter a Conda environment to run the system.
+#6th: I then was able to follow the directions provided by asam2, specifying correct files and output directories
+#Here are important specific codes when running asam2 (Example for the RIXI sequence):
+
+# cd asam2
+
+  salloc --gres=gpu:1 --mem=64G --time=01:00:00
+
+  module purge
+
+  module load Miniforge3
+
+  conda create --name asamt
+
+  conda activate asamt
+
+  mkdir -p ~/asam2_outputs/rixi
+
+  python3 scripts/generate_ensemble.py \
+    -c config/atlas_model.yaml \
+    -i ~/asam2_proteins/rixi_final.pdb \
+    -o ~/asam2_outputs/rixi/rixi \
+    -n 50 \
+    -b 8 \
+    -d cuda
