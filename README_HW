@@ -1,30 +1,73 @@
-#When working with asam2, a couple of things were needed in order for the software to run properly. 
-#1st: I needed to download each protein from RCSB as a .pdb file and remove any solvent or not polymer items from the .pdb file in pymol
-#2nd: Create a new directory in my Home Directory with all of the protein files
-#3rd: Similar to my work with BioEmu, I was working within the gateway node and will need to enter a true node to be able to run the sequences properly
-#4th: I needed to get access to a GPU to run the sequences effectively. Unfourtunately, the GPU's were down at the time, therefore delaying results
-#5th: As well as acessing a GPU, I needed to enter a Conda environment to run the system.
-#6th: I then was able to follow the directions provided by asam2, specifying correct files and output directories
-#Here are important specific codes when running asam2 (Example for the RIXI sequence):
+# Running ASAM2
 
-# cd asam2
+While working with ASAM2, there were several setup steps and requirements needed to ensure the software ran correctly:
 
-  salloc --gres=gpu:1 --mem=64G --time=01:00:00
+## Key Notes
 
-  module purge
+1. **Protein Preparation**
+   - Downloaded each protein structure from RCSB as a `.pdb` file
+   - Cleaned the structures in PyMOL by removing:
+     - Solvent molecules
+     - Non-polymer components
 
-  module load Miniforge3
+2. **File Organization**
+   - Created a dedicated directory in my home folder to store all processed protein `.pdb` files
 
-  conda create --name asamt
+3. **Compute Environment**
+   - Initially attempted to run on the gateway node, which was inefficient
+   - Switched to a proper compute node for better performance
 
-  conda activate asamt
+4. **GPU Requirements**
+   - ASAM2 requires GPU access for efficient execution
+   - GPU downtime temporarily delayed results during this process
 
-  mkdir -p ~/asam2_outputs/rixi
+5. **Conda Environment Setup**
+   - Created and activated a Conda environment to run ASAM2 properly
 
-  python3 scripts/generate_ensemble.py \
-    -c config/atlas_model.yaml \
-    -i ~/asam2_proteins/rixi_final.pdb \
-    -o ~/asam2_outputs/rixi/rixi \
-    -n 50 \
-    -b 8 \
-    -d cuda
+6. **Execution Workflow**
+   - Followed ASAM2 documentation to:
+     - Specify correct input `.pdb` files
+     - Define output directories
+     - Configure run parameters
+
+---
+
+## Example Commands (RIXI Sequence)
+
+### Navigate to ASAM2 Directory
+```bash
+cd ~/asam2
+```
+
+### Request GPU Node
+```bash
+salloc --gres=gpu:1 --mem=64G --time=01:00:00
+```
+
+### Load Required Modules
+```bash
+module purge
+module load Miniforge3
+```
+
+### Create and Activate Conda Environment
+```bash
+conda create --name asamt
+conda activate asamt
+```
+
+### Create Output Directory
+```bash
+mkdir -p ~/asam2_outputs/rixi
+```
+
+### Run ASAM2
+```bash
+python3 scripts/generate_ensemble.py \
+  -c config/atlas_model.yaml \
+  -i ~/asam2_proteins/rixi_final.pdb \
+  -o ~/asam2_outputs/rixi/rixi \
+  -n 50 \
+  -b 8 \
+  -d cuda
+```
